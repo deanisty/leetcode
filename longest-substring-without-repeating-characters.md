@@ -21,4 +21,41 @@
      
      
      
-#### 
+#### 解答
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int lengthOfLongestSubstring(char* s)
+{
+    int i, j, start, length;
+    j = start = 0;
+    length = 1;
+
+    do {
+        for(i = start; i < j; i ++)
+        {
+            if(s[i] == s[j]) {
+                if(j - i > length) {
+                    length = j - i;
+                }
+                start ++;
+                break;
+            }
+        }
+        j++;
+    }while(s[j]);
+
+    return length;
+}
+
+
+void main()
+{
+    char *s = "testlongeststr";
+    int length = lengthOfLongestSubstring(s);
+    printf("%d\n", length);
+}
+```
