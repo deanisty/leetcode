@@ -29,12 +29,18 @@
 #include <string.h>
 
 int findCharIndex(char *s, int start, int end, char c);
-
+/***
+ * 思路：使用指针 i,j 设置滑动窗口
+ * [i,j) 半开区间为窗口内容
+ * j 递增过程中检测 s[j] 处的字符是否和区间中字符重复（如果重复假设为 k）
+ * 如果是则移动 i 至 k 的下一个位置
+ * 并且递增过程计算 j - i 作为最大的唯一子串长度
+ */
 int lengthOfLongestSubstring(char* s)
 {
     int i, j, k, length = 0;
     int slen = strlen(s);
-
+    // 空字符 或者 长度为1 的字符串 特殊处理
     if(slen <= 1) {
         return slen;
     }
@@ -55,7 +61,7 @@ int lengthOfLongestSubstring(char* s)
 int findCharIndex(char *s, int start, int end, char c)
 {
     int i;
-
+    // 窗口大小为0不处理
     if(start == end) {
         return -1;
     }
