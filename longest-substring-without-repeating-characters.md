@@ -26,35 +26,53 @@
 ```C
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
+int findCharIndex(char *s, int start, int end, char c);
 
 int lengthOfLongestSubstring(char* s)
 {
-    int i, j, start, length;
-    j = start = 0;
-    length = 1;
+    int i, j, k, length = 0;
+    int slen = strlen(s);
 
-    do {
-        for(i = start; i < j; i ++)
-        {
-            if(s[i] == s[j]) {
-                if(j - i > length) {
-                    length = j - i;
-                }
-                start ++;
-                break;
-            }
+    if(slen <= 1) {
+        return slen;
+    }
+
+    for(i = 0, j = 0; j < slen; j ++ )
+    {
+        k = findCharIndex(s, i, j, s[j]);
+        if(k >= 0) {
+            i = k + 1;
         }
-        j++;
-    }while(s[j]);
+        if(length < j - i + 1)
+            length = j - i + 1;
+    }
 
     return length;
 }
 
+int findCharIndex(char *s, int start, int end, char c)
+{
+    int i;
+
+    if(start == end) {
+        return -1;
+    }
+
+    // [start, end)
+    for(i = start; i <= end - 1; i++) {
+        if(s[i] == c) {
+            return i;
+        }
+    }
+
+    return -1;
+}
 
 void main()
 {
-    char *s = "testlongeststr";
+    char *s = "ab";
     int length = lengthOfLongestSubstring(s);
     printf("%d\n", length);
 }
