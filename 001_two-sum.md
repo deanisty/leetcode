@@ -21,15 +21,14 @@ int printArr(const *arr, const int size);
 
 /***
  * find two number from int array which's summary equals to target
+ * 这是比较暴力的方法 - 两遍循环法 时间复杂度为 O(n^2) n - 数组的元素个数
+ * 更加高效的方法是 Hash 索引法
  */
 int* twoSum(int* nums, int numsSize, int target) {
     int i, j, tmp, *result;
     // malloc reslut array space of 2 integers
     result = (int *) malloc(sizeof(int) * 2);
     for(i=0; i<numsSize; i++){
-        if(nums[i] > target) {
-            break;
-        }
         // target - nums[i]
         tmp = target - nums[i];
         for(j=i+1; j<numsSize; j++) {
@@ -59,8 +58,8 @@ int printArr(const *arr, const int size)
 
 void main()
 {
-    int i, nums[] = {9, 7, 6, 1, 3}, *result;
-    result = twoSum(nums, 5, 9);
+    int i, nums[] = {-1, -2, -3, -4, -5}, *result;
+    result = twoSum(nums, 5, -8);
     printArr(result, 2);
     printf("\n");
     free(result);
