@@ -16,37 +16,34 @@
 #### 解答
 
 ````C
-#include <stdio.h>
-#include <stdlib.h>
-
-struct ListNode
-{
-    int value;
-    struct ListNode *next;
-} listNode;
-
 // add tow list
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2)
 {
-    int sum = 0, carry = 0, k;
+    int sum = 0, carry = 0, k, op1, op2;
     struct ListNode *l3, *prev, *node, *i, *j;
     i = l1;
     j = l2;
     do {
-        if(i != NULL && j != NULL) {
-            sum = i->value + j->value + carry;
-        }else if (i != NULL) {
-            sum = i->value + carry;
+        if (i != NULL) {
+            op1 = i->val;
         }else {
-            sum = j->value + carry;
+            op1 = 0;
         }
+        if (j != NULL) {
+            op2 = j->val;
+        }else {
+            op2 = 0;
+        }
+
+        sum = op1 + op2 + carry;
+
         carry = sum / 10;
         if(carry > 0) {
             sum -= 10;
         }
 
         node = malloc(sizeof(struct ListNode));
-        node->value = sum;
+        node->val = sum;
         node->next = NULL;
         if(i == l1) {
             l3 = node; // head node
@@ -60,7 +57,7 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2)
         if(j != NULL)
             j = j->next;
 
-    }while(i != NULL || j != NULL);
+    }while(i != NULL || j != NULL || carry > 0);
 
     return l3;
 }
@@ -74,7 +71,7 @@ struct ListNode* createList(int* nums, int size)
     for(i=0; i<size; i++)
     {
         node = malloc(sizeof(struct ListNode));
-        node->value = nums[i];
+        node->val = nums[i];
         node->next = NULL;
         if(i==0) {
             ln = node; // head node
@@ -94,7 +91,7 @@ void printList(struct ListNode* l)
     struct ListNode* p;
     p = l;
     do {
-        printf("value is %d next is %x\t", p->value, p->next);
+        printf("val is %d next is %x\t", p->val, p->next);
         p = p->next;
     } while(p != NULL);
     printf("\n");
@@ -102,9 +99,9 @@ void printList(struct ListNode* l)
 
 void main()
 {
-    int arr1[] = {2,4,3}, arr2[] = {5,6,4};
-    struct ListNode* num1 = createList(arr1, 3);
-    struct ListNode* num2 = createList(arr2, 3);
+    int arr1[] = {5}, arr2[] = {5};
+    struct ListNode* num1 = createList(arr1, 1);
+    struct ListNode* num2 = createList(arr2, 1);
 
     printList(num1);
     printList(num2);
